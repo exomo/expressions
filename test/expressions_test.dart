@@ -19,18 +19,24 @@ void main() {
     });
 
     test('numeric literal', () {
-      for (var v in ['134', '.5', '43.2', '1e3', '1E-3', '1e+0', '0x01']) {
+      for (var v in [
+        '134',
+        '.5',
+        '43.2',
+        '1e3',
+        '1E-3',
+        '1e+0',
+        '0x01',
+        '0xD3',
+        '0X1b'
+      ]) {
         var w = parser.numericLiteral.end().parse(v);
         expect(w is Success, isTrue, reason: 'Failed parsing `$v`');
         expect(w.value.value, num.parse(v));
         expect(w.value.raw, v);
       }
 
-      for (var v in [
-        '-134',
-        '.5.4',
-        '1e5E3',
-      ]) {
+      for (var v in ['-134', '.5.4', '1e5E3', '12x34']) {
         expect(parser.numericLiteral.end().parse(v) is Success, isFalse);
       }
     });

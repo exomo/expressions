@@ -19,15 +19,16 @@ class ExpressionParser {
           .flatten()
           .map((v) => Identifier(v));
 
-  // Parse simple numeric literals: `12`, `3.4`, `.5`.
-  Parser<Literal> get numericLiteral => ((digit() | char('.')).and() &
-              (digit().star() &
-                  ((char('.') & digit().plus()) |
-                          (char('x') & digit().plus()) |
-                          (anyOf('Ee') &
-                              anyOf('+-').optional() &
-                              digit().plus()))
-                      .optional()))
+  // Parse simple numeric literals: `12`, `3.4`, `.5`, `0xAB`.
+  Parser<Literal> get numericLiteral =>
+      ((char('0') & anyOf('xX') & (digit() | anyOf('abcdefABCDEF')).plus()) |
+              (digit() | char('.')).and() &
+                  (digit().star() &
+                      ((char('.') & digit().plus()) |
+                              (anyOf('Ee') &
+                                  anyOf('+-').optional() &
+                                  digit().plus()))
+                          .optional()))
           .flatten()
           .map((v) {
         return Literal(num.parse(v), v);
