@@ -26,6 +26,9 @@ void main() {
         '1e3',
         '1E-3',
         '1e+0',
+        '.1e2',
+        '1.23e4',
+        '.6e-7',
         '0x01',
         '0xD3',
         '0X1b'
@@ -36,8 +39,9 @@ void main() {
         expect(w.value.raw, v);
       }
 
-      for (var v in ['-134', '.5.4', '1e5E3', '12x34']) {
-        expect(parser.numericLiteral.end().parse(v) is Success, isFalse);
+      for (var v in ['-134', '.5.4', '1e5E3', '5.', '12x34']) {
+        expect(parser.numericLiteral.end().parse(v) is Success, isFalse,
+            reason: 'Expected to fail parsing `$v`');
       }
     });
 

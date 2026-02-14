@@ -23,11 +23,8 @@ class ExpressionParser {
   Parser<Literal> get numericLiteral =>
       ((char('0') & anyOf('xX') & (digit() | anyOf('abcdefABCDEF')).plus()) |
               (digit() | char('.')).and() &
-                  (digit().star() &
-                      ((char('.') & digit().plus()) |
-                              (anyOf('Ee') &
-                                  anyOf('+-').optional() &
-                                  digit().plus()))
+                  ((digit().star() & (char('.') & digit().plus()).optional()) &
+                      (anyOf('Ee') & anyOf('+-').optional() & digit().plus())
                           .optional()))
           .flatten()
           .map((v) {
