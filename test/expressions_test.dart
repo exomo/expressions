@@ -151,7 +151,10 @@ void main() {
         '1+2',
         'a+b*2-Math.sqrt(2)',
         '-1+2',
-        '1+4-5%2*5<4==(2+1)*1<=2&&2||2'
+        '1+4-5%2*5<4==(2+1)*1<=2&&2||2',
+        '1<<10',
+        '4>>5',
+        '2^4~/3>=x??4'
       ]) {
         var w = parser.binaryExpression.end().parse(v);
         expect(w is Success, isTrue, reason: 'Failed parsing `$v`');
@@ -188,10 +191,12 @@ void main() {
         'x*x+y*y==z*z': true,
         'n ?? 1': 1,
         '5~/2': 2,
+        '4<<5<100>>1<<2': true,
       };
 
       expressions.forEach((e, r) {
-        expect(evaluator.eval(Expression.parse(e), context), r);
+        expect(evaluator.eval(Expression.parse(e), context), r,
+            reason: 'Failed evaluating `$e`');
       });
     });
     test('index expressions', () {

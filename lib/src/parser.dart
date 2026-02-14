@@ -117,10 +117,12 @@ class ExpressionParser {
     '!=': 6,
     '<=': 7,
     '>=': 7,
+    // must be before '<' to prevent the parser from prematurely accepting it as the shorter operator
+    '<<': 8,
+    // must be before '>' to prevent the parser from prematurely accepting it as the shorter operator
+    '>>': 8,
     '<': 7,
     '>': 7,
-    '<<': 8,
-    '>>': 8,
     '+': 9,
     '-': 9,
     '*': 10,
